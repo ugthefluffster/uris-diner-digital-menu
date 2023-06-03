@@ -7,12 +7,12 @@ import { apiUrl } from './config';
 import axios from 'axios';
 
 function App() {
-  const [categories, setCategories] = React.useState([{id: 0}])
+  const [categories, setCategories] = React.useState([{id: 0, name: ''}])
 
   React.useEffect(() => {
     axios
       .get(`${apiUrl}/categories`)
-      .then(response => setCategories(response.data))
+      .then(response => setCategories(response.data));
   }, [])
 
   return (
