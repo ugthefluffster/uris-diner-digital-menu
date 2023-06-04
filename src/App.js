@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
+import './css/bootstrap.css'
 import './App.css';
 import WelcomePage from './pages/WelcomePage';
 import MenuPage from './pages/MenuPage';

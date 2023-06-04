@@ -1,7 +1,7 @@
 body {
-  padding-top: 100px;
+  padding-top: 80px;
   overflow-y: scroll;
-  background-color: rgb(245, 233, 220);
+  background-color: #fffbf4;
 }
 
 .dish-image {
@@ -14,4 +14,10 @@ body {
 .cat-image {
   height: 100px;
   width: 100%;
+}
+
+.logo-icon {
+  height: 40px;
+  box-shadow: 0px 0px 20px #fffbf4;
+  border-radius: 20%;
 }
