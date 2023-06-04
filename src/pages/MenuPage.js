@@ -2,6 +2,7 @@ import React from 'react'
 import { apiUrl } from '../config'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
+import { after } from 'underscore'
 
 function MenuPage({ categories }) {
   const [dishes, setDishes] = React.useState([{ id: 0 }])
@@ -28,13 +29,13 @@ function MenuPage({ categories }) {
     <div>
       <nav className="navbar fixed-top bg-primary justify-content-center">
         <button className='d-md-none btn position-absolute start-0' data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">Categories▾</button>
-        <Link to="/" className="navbar-brand" ><h1>Uris diner</h1></Link>
+        <Link to="/" className="navbar-brand" ><h3>Uris diner</h3></Link>
       </nav>
 
       <div className='container-xxl'>
         <div className='row'>
 
-          <div className='col-md-3 bg-white'>
+          <div className='col-md-3 bg-white shadow'>
             <div className='offcanvas-md offcanvas-start p-3' tabIndex="-1" id="offcanvasResponsive">
               <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasLabel">Categories</h5>
@@ -63,7 +64,7 @@ function MenuPage({ categories }) {
               :
               <div>
                 <div className='row text-center'>
-                  <h2>{shownCategory && shownCategory.name}</h2>
+                  <h1 className='mb-4'>{shownCategory && shownCategory.name}</h1>
                 </div>
                 <div className='row'>
                   {dishes.map(dish =>
