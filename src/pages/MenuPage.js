@@ -5,10 +5,10 @@ import { Link, useParams } from 'react-router-dom'
 import icon from './icon.webp'
 
 function MenuPage({ categories }) {
-  const [dishes, setDishes] = React.useState([{ id: 0 }])
+  const [dishes, setDishes] = React.useState(null)
   const [isLoaded, setIsLoaded] = React.useState(false)
   const params = useParams()
-  const shownCategory = categories.find(category => category.id === parseInt(params.id))
+  let shownCategory = categories ? categories.find(category => category.id === parseInt(params.id)) : null
 
   React.useEffect(() => {
     axios
@@ -17,7 +17,6 @@ function MenuPage({ categories }) {
         setDishes(response.data);
         setIsLoaded(true)
       })
-
   }, [params])
 
   function handleClick(id) {
@@ -30,7 +29,7 @@ function MenuPage({ categories }) {
     <div>
       <nav className="navbar fixed-top bg-primary justify-content-center shadow p-1">
         <button className='d-md-none btn btn-primary position-absolute start-0 fs-5 pe-4' data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">
-          More<span className='fs-5 position-absolute' style={{top:"20%"}}>▾</span>
+          More<span className='fs-5 position-absolute' style={{ top: "20%" }}>▾</span>
         </button>
         <Link to="/" className="navbar-brand text-white" >
           <h3 className='mb-0 fw-normal'>
@@ -39,10 +38,8 @@ function MenuPage({ categories }) {
           </h3>
         </Link>
       </nav>
-
       <div className='container-xxl'>
         <div className='row'>
-
           <div className='col-md-3 bg-white shadow' >
             <div className='offcanvas-md offcanvas-start p-3' tabIndex="-1" id="offcanvasResponsive" style={{ overflowY: "auto" }}>
               <div className="offcanvas-header">
@@ -52,20 +49,29 @@ function MenuPage({ categories }) {
               </div>
               <div>
                 <h3 className="offcanvas-title d-none d-md-block mb-3 text-center">Categories</h3>
-                {categories.map(category =>
-                  <div className='text-center mb-4' key={category.id}>
-                    <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
-                      <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
-                        <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
-                        <h5>{category.name}</h5>
-                      </Link>
+                {!categories ?
+                  <div className='text-center'>
+                    <div className="spinner-border text-secondary" role="status">
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
-                )}
+                  :
+                  <div>
+                    {categories.map(category =>
+                      <div className='text-center mb-4' key={category.id}>
+                        <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
+                          <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
+                            <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
+                            <h5>{category.name}</h5>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                }
               </div>
             </div>
           </div>
-
           <div className='col position-relative' >
             {!isLoaded ?
               <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "30vh" }} >
@@ -74,7 +80,7 @@ function MenuPage({ categories }) {
               :
               <div>
                 <div className='row text-center'>
-                  <h1 className='mb-4'>{shownCategory && shownCategory.name}</h1>
+                  <h1 className='mb-4'>{shownCategory.name}</h1>
                 </div>
                 <div className='row'>
                   {dishes.map(dish =>
@@ -104,7 +110,6 @@ function MenuPage({ categories }) {
                 </div>
               </div>
             }
-
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import { apiUrl } from './config';
 import axios from 'axios';
 
 function App() {
-  const [categories, setCategories] = React.useState([{id: 0, name: ''}])
+  const [categories, setCategories] = React.useState(null)
 
   React.useEffect(() => {
     axios
