@@ -86,8 +86,8 @@ function MenuPage({ categories }) {
                         <div className='d-flex justify-content-center flex-wrap'>
                           <h5 className='mb-1'>{dish.name}</h5>
                           <h5>
-                            {dish.is_vegeterian && <span style={{ backgroundColor: "green" }} class="badge ms-1">V</span>}
-                            {dish.is_gluten_free && <span style={{ backgroundColor: "orange" }} class="badge ms-1">G</span>}
+                            {dish.is_vegeterian && <span style={{ backgroundColor: "green" }} className="badge ms-1">V</span>}
+                            {dish.is_gluten_free && <span style={{ backgroundColor: "orange" }} className="badge ms-1">G</span>}
                           </h5>
                         </div>
                         <div className='mb-1'><small>{dish.description}</small></div>
@@ -98,8 +98,8 @@ function MenuPage({ categories }) {
                 </div>
                 <div className='row mt-4'>
                   <div className='d-flex justify-content-center'>
-                    <p className='me-2'><span class="badge fs-6" style={{ backgroundColor: "green" }} >V</span> Vegeterian</p>
-                    <p><span class="badge fs-6" style={{ backgroundColor: "orange" }}>G</span> Gluten Free</p>
+                    <p className='me-2'><span className="badge fs-6" style={{ backgroundColor: "green" }} >V</span> Vegeterian</p>
+                    <p><span className="badge fs-6" style={{ backgroundColor: "orange" }}>G</span> Gluten Free</p>
                   </div>
                 </div>
               </div>
