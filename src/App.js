@@ -11,7 +11,7 @@ import './App.css';
 function App() {
   const [categories, setCategories] = React.useState(null)
   const navigate = useNavigate()
-  // check out React Preload Media
+
   React.useEffect(() => {
     axios
       .get(`${apiUrl}/categories`)

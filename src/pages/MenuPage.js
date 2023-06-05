@@ -3,6 +3,7 @@ import { apiUrl } from '../config'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import icon from './icon.webp'
+import { PreloadMedia, MediaType } from 'react-preload-media';
 
 function MenuPage({ categories }) {
   const [dishes, setDishes] = React.useState(null)
@@ -11,6 +12,8 @@ function MenuPage({ categories }) {
   const navigate = useNavigate()
   let shownCategory = categories ? categories.find(category => category.id === parseInt(params.id)) : null
 
+  const media = dishes ? dishes.map(dish => ({type: MediaType.Image, url: dish.image_src})) : []
+ 
   React.useEffect(() => {
     axios
       .get(`${apiUrl}/dishes?category_id=${params.id}`)
@@ -37,7 +40,7 @@ function MenuPage({ categories }) {
   }
 
   return (
-    <div style={{ paddingTop: "80px" }}>
+    <div>
       <nav className="navbar fixed-top bg-primary justify-content-center shadow p-1">
         <button className='d-md-none btn btn-primary position-absolute start-0 fs-5 pe-4' data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">
           More<span className='fs-5 position-absolute' style={{ top: "20%" }}>▾</span>
@@ -49,41 +52,43 @@ function MenuPage({ categories }) {
           </h3>
         </Link>
       </nav>
-      <div className='container-fluid'>
+      <div className='container-fluid' >
         <div className='row'>
-          <div className='col-md-3 bg-white shadow' >
-            <div className='offcanvas-md offcanvas-start p-3 sidebar' tabIndex="-1" id="offcanvasResponsive">
-              <div className="offcanvas-header">
-                <div></div>
-                <h3 className="offcanvas-title ms-4" id="offcanvasLabel">Categories</h3>
-                <button className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive"></button>
-              </div>
-              <div>
-                <h3 className="offcanvas-title d-none d-md-block mb-3 text-center">Categories</h3>
-                {!categories ?
-                  <div className='text-center'>
-                    <div className="spinner-border text-secondary" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
-                  :
-                  <div>
-                    {categories.map(category =>
-                      <div className='text-center mb-4' key={category.id}>
-                        <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
-                          <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
-                            <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
-                            <h5>{category.name}</h5>
-                          </Link>
-                        </div>
+          <div className='col-md-3 sidebar-container'>
+            <div className=' bg-white shadow' >
+              <div className='offcanvas-md offcanvas-start p-3 sidebar' tabIndex="-1" id="offcanvasResponsive">
+                <div className="offcanvas-header">
+                  <div></div>
+                  <h3 className="offcanvas-title ms-4" id="offcanvasLabel">Categories</h3>
+                  <button className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive"></button>
+                </div>
+                <div>
+                  <h3 className="offcanvas-title d-none d-md-block mb-3 text-center">Categories</h3>
+                  {!categories ?
+                    <div className='text-center'>
+                      <div className="spinner-border text-secondary" role="status">
+                        <span className="visually-hidden">Loading...</span>
                       </div>
-                    )}
-                  </div>
-                }
+                    </div>
+                    :
+                    <div>
+                      {categories.map(category =>
+                        <div className='text-center mb-4' key={category.id}>
+                          <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
+                            <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
+                              <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
+                              <h5>{category.name}</h5>
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           </div>
-          <div className='col position-relative dishesarea'>
+          <div className='col position-relative dishesarea' >
             {!isLoaded ?
               <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "30vh" }} >
                 <div className="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style={{ width: `100%` }}></div>
