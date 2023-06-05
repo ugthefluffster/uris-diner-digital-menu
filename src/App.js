@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import MenuPage from './pages/MenuPage';
@@ -10,7 +10,7 @@ import './App.css';
 
 function App() {
   const [categories, setCategories] = React.useState(null)
-  const navigate = useNavigate()
+  const navigate = useCallback(useNavigate, [])
 
   React.useEffect(() => {
     axios
@@ -19,7 +19,7 @@ function App() {
       .catch(error => {
         console.log(error.message)
         navigate('/error')
-      })
+      });
   }, [navigate])
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { apiUrl } from '../config'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -7,19 +7,19 @@ import { PreloadMedia, MediaType } from 'react-preload-media';
 
 function MenuPage({ categories }) {
   const [dishes, setDishes] = React.useState(null)
+  const [isLoading, setIsLoading] = React.useState(false)
   const [isLoaded, setIsLoaded] = React.useState(false)
   const params = useParams()
-  const navigate = useNavigate()
+  const navigate = useCallback(useNavigate, [])
   let shownCategory = categories ? categories.find(category => category.id === parseInt(params.id)) : null
+  const media = isLoading ? dishes.map(dish => ({ type: MediaType.Image, url: dish.image_src })) : []
 
-  const media = dishes ? dishes.map(dish => ({type: MediaType.Image, url: dish.image_src})) : []
- 
   React.useEffect(() => {
     axios
       .get(`${apiUrl}/dishes?category_id=${params.id}`)
       .then(response => {
         setDishes(response.data);
-        setIsLoaded(true)
+        setIsLoading(true)
       })
       .catch(error => {
         if (error.response) {
@@ -30,7 +30,7 @@ function MenuPage({ categories }) {
           console.log(error.message);
           navigate('/error')
         }
-      })
+      });
   }, [params, navigate])
 
   function handleClick(id) {
@@ -89,8 +89,12 @@ function MenuPage({ categories }) {
             </div>
           </div>
           <div className='col position-relative dishesarea' >
+
+            {isLoading &&
+              <PreloadMedia media={media} onFinished={() => { setIsLoaded(true); setIsLoading(false) }} />
+            }
             {!isLoaded ?
-              <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "30vh" }} >
+              <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "50vh" }} >
                 <div className="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style={{ width: `100%` }}></div>
               </div>
               :
