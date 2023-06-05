@@ -1,13 +1,14 @@
 import React from 'react'
 import { apiUrl } from '../config'
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import icon from './icon.webp'
 
 function MenuPage({ categories }) {
   const [dishes, setDishes] = React.useState(null)
   const [isLoaded, setIsLoaded] = React.useState(false)
   const params = useParams()
+  const navigate = useNavigate()
   let shownCategory = categories ? categories.find(category => category.id === parseInt(params.id)) : null
 
   React.useEffect(() => {
@@ -17,7 +18,17 @@ function MenuPage({ categories }) {
         setDishes(response.data);
         setIsLoaded(true)
       })
-  }, [params])
+      .catch(error => {
+        if (error.response) {
+          console.log(error.response.data.message);
+          navigate('/error')
+        }
+        else {
+          console.log(error.message);
+          navigate('/error')
+        }
+      })
+  }, [params, navigate])
 
   function handleClick(id) {
     if (parseInt(params.id) !== id) {
@@ -26,7 +37,7 @@ function MenuPage({ categories }) {
   }
 
   return (
-    <div>
+    <div style={{ paddingTop: "80px" }}>
       <nav className="navbar fixed-top bg-primary justify-content-center shadow p-1">
         <button className='d-md-none btn btn-primary position-absolute start-0 fs-5 pe-4' data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">
           More<span className='fs-5 position-absolute' style={{ top: "20%" }}>▾</span>
