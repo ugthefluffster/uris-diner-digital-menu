@@ -49,10 +49,10 @@ function MenuPage({ categories }) {
           </h3>
         </Link>
       </nav>
-      <div className='container-xxl'>
+      <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-3 bg-white shadow' >
-            <div className='offcanvas-md offcanvas-start p-3' tabIndex="-1" id="offcanvasResponsive" style={{ overflowY: "auto" }}>
+            <div className='offcanvas-md offcanvas-start p-3 sidebar' tabIndex="-1" id="offcanvasResponsive">
               <div className="offcanvas-header">
                 <div></div>
                 <h3 className="offcanvas-title ms-4" id="offcanvasLabel">Categories</h3>
@@ -83,7 +83,7 @@ function MenuPage({ categories }) {
               </div>
             </div>
           </div>
-          <div className='col position-relative' >
+          <div className='col position-relative dishesarea'>
             {!isLoaded ?
               <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "30vh" }} >
                 <div className="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style={{ width: `100%` }}></div>
@@ -95,7 +95,7 @@ function MenuPage({ categories }) {
                 </div>
                 <div className='row'>
                   {dishes.map(dish =>
-                    <div className='col-6 p-2 text-center d-flex flex-column justify-content-between' key={dish.id}>
+                    <div className='col-6 col-xl-4 p-2 text-center d-flex flex-column justify-content-between' key={dish.id}>
                       <div>
                         <div>
                           <img className='rounded-1 object-fit-cover dish-image mb-3' src={dish.image_src} alt="" />

@@ -1,5 +1,4 @@
 body {
-  overflow-y: scroll;
   background-color: #fffbf4;
 }
 
@@ -29,3 +28,18 @@ body {
   box-shadow: 6px 8px 6px rgba(0, 0, 0, 0.226);
 }
 
+.sidebar {
+  overflow-y: auto;
+  height: calc(100vh - 80px)
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    height: 100%
+  }
+}
+
+.dishesarea {
+  overflow-y: auto;
+  height: calc(100vh - 80px)
+}
