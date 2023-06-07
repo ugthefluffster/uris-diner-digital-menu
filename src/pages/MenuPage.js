@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PreloadMedia, MediaType } from 'react-preload-media';
-import OneCategory from '../Components/OneCategory';
 import OneDish from '../Components/OneDish';
 import LoadingBar from '../Components/LoadingBar';
 import { apiUrl } from '../config'
@@ -23,7 +22,6 @@ function MenuPage({ categories }) {
       .then(response => {
         setDishes(response.data);
         setIsLoading(true);
-        console.log(isLoaded)
       })
       .catch(error => {
         if (error.response) {
@@ -77,7 +75,14 @@ function MenuPage({ categories }) {
                     :
                     <div>
                       {categories.map(category =>
-                        <OneCategory key={category.id} category={category} handleClick={handleClick} />
+                        <div className='text-center mb-4' key={category.id}>
+                          <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
+                            <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
+                              <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
+                              <h5>{category.name}</h5>
+                            </Link>
+                          </div>
+                        </div>
                       )}
                     </div>
                   }
@@ -86,7 +91,7 @@ function MenuPage({ categories }) {
             </div>
           </div>
           <div className='col position-relative dishesarea' >
-          {isLoading &&
+            {isLoading &&
               <PreloadMedia media={media} onFinished={() => { setIsLoaded(true); setIsLoading(false) }} />
             }
             {!isLoaded ?
