@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import dinerimage from './diner-food.jpg'
 import { PreloadMedia, MediaType } from 'react-preload-media';
+import LoadingBar from '../Components/LoadingBar';
+import dinerimage from './diner-food.jpg'
 
 function WelcomePage({ categories }) {
   const [isLoaded, setIsLoaded] = React.useState(false)
@@ -11,9 +12,7 @@ function WelcomePage({ categories }) {
     <div>
       <PreloadMedia media={media} onFinished={() => { setIsLoaded(true); }} />
       {!categories || !isLoaded ?
-        <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "50vh" }} >
-          <div className="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style={{ width: `100%` }}></div>
-        </div>
+        <LoadingBar />
         :
         <div style={{ height: "100vh" }} className='d-flex flex-column align-items-center justify-content-center'>
           <h1 className="text-shadow text-primary">Welcome to Uri's Diner</h1>

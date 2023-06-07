@@ -1,16 +1,18 @@
-import React, { useCallback } from 'react'
-import { apiUrl } from '../config'
+import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import icon from './icon.webp'
 import { PreloadMedia, MediaType } from 'react-preload-media';
+import OneDish from '../Components/OneDish';
+import LoadingBar from '../Components/LoadingBar';
+import { apiUrl } from '../config'
+import icon from './icon.webp'
 
 function MenuPage({ categories }) {
   const [dishes, setDishes] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(false)
   const [isLoaded, setIsLoaded] = React.useState(false)
   const params = useParams()
-  const navigate = useCallback(useNavigate, [])
+  const navigate = useNavigate()
   let shownCategory = categories ? categories.find(category => category.id === parseInt(params.id)) : null
   const media = isLoading ? dishes.map(dish => ({ type: MediaType.Image, url: dish.image_src })) : []
 
@@ -31,7 +33,7 @@ function MenuPage({ categories }) {
           navigate('/error')
         }
       });
-  }, [params, navigate])
+  }, [params])
 
   function handleClick(id) {
     if (parseInt(params.id) !== id) {
@@ -55,7 +57,7 @@ function MenuPage({ categories }) {
       <div className='container-fluid' >
         <div className='row'>
           <div className='col-md-3 sidebar-container'>
-            <div className=' bg-white shadow' >
+            <div className='bg-white shadow' >
               <div className='offcanvas-md offcanvas-start p-3 sidebar' tabIndex="-1" id="offcanvasResponsive">
                 <div className="offcanvas-header">
                   <div></div>
@@ -89,14 +91,11 @@ function MenuPage({ categories }) {
             </div>
           </div>
           <div className='col position-relative dishesarea' >
-
             {isLoading &&
               <PreloadMedia media={media} onFinished={() => { setIsLoaded(true); setIsLoading(false) }} />
             }
             {!isLoaded ?
-              <div className="progress w-50 position-absolute start-50 translate-middle" style={{ top: "50vh" }} >
-                <div className="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style={{ width: `100%` }}></div>
-              </div>
+              <LoadingBar />
               :
               <div>
                 <div className='row text-center'>
@@ -104,22 +103,7 @@ function MenuPage({ categories }) {
                 </div>
                 <div className='row'>
                   {dishes.map(dish =>
-                    <div className='col-6 col-xl-4 p-2 text-center d-flex flex-column justify-content-between' key={dish.id}>
-                      <div>
-                        <div>
-                          <img className='rounded-1 object-fit-cover dish-image mb-3' src={dish.image_src} alt="" />
-                        </div>
-                        <div className='d-flex justify-content-center flex-wrap'>
-                          <h5 className='mb-1'>{dish.name}</h5>
-                          <h5>
-                            {dish.is_vegeterian && <span style={{ backgroundColor: "green" }} className="badge ms-1">V</span>}
-                            {dish.is_gluten_free && <span style={{ backgroundColor: "orange" }} className="badge ms-1">G</span>}
-                          </h5>
-                        </div>
-                        <div className='mb-1'><small>{dish.description}</small></div>
-                      </div>
-                      <div><h4>{dish.price}₪</h4></div>
-                    </div>
+                    <OneDish dish={dish} />
                   )}
                 </div>
                 <div className='row mt-4'>

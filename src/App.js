@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import WelcomePage from './pages/WelcomePage';
-import MenuPage from './pages/MenuPage';
-import ErrorPage from './pages/ErrorPage';
-import { apiUrl } from './config';
+import React from 'react'
 import axios from 'axios';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import WelcomePage from './Pages/WelcomePage';
+import MenuPage from './Pages/MenuPage';
+import ErrorPage from './Pages/ErrorPage';
+import { apiUrl } from './config';
 import './css/bootstrap.css'
 import './App.css';
 
 function App() {
   const [categories, setCategories] = React.useState(null)
-  const navigate = useCallback(useNavigate, [])
+  const navigate = useNavigate()
 
   React.useEffect(() => {
     axios
@@ -20,7 +20,7 @@ function App() {
         console.log(error.message)
         navigate('/error')
       });
-  }, [navigate])
+  }, [])
 
   return (
     <div>
