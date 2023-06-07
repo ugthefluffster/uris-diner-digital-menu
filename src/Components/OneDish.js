@@ -2,7 +2,7 @@ import React from 'react'
 
 function OneDish({dish}) {
   return (
-    <div className='col-6 col-xl-4 p-2 text-center d-flex flex-column justify-content-between' key={dish.id}>
+    <div className='col-6 col-xl-4 p-2 text-center d-flex flex-column justify-content-between'>
     <div>
       <div>
         <img className='rounded-1 object-fit-cover dish-image mb-3' src={dish.image_src} alt="" />

@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PreloadMedia, MediaType } from 'react-preload-media';
+import OneCategory from '../Components/OneCategory';
 import OneDish from '../Components/OneDish';
 import LoadingBar from '../Components/LoadingBar';
 import { apiUrl } from '../config'
@@ -21,7 +22,8 @@ function MenuPage({ categories }) {
       .get(`${apiUrl}/dishes?category_id=${params.id}`)
       .then(response => {
         setDishes(response.data);
-        setIsLoading(true)
+        setIsLoading(true);
+        console.log(isLoaded)
       })
       .catch(error => {
         if (error.response) {
@@ -60,7 +62,7 @@ function MenuPage({ categories }) {
             <div className='bg-white shadow' >
               <div className='offcanvas-md offcanvas-start p-3 sidebar' tabIndex="-1" id="offcanvasResponsive">
                 <div className="offcanvas-header">
-                  <div></div>
+                  <div></div> {/* empty div for centering */}
                   <h3 className="offcanvas-title ms-4" id="offcanvasLabel">Categories</h3>
                   <button className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive"></button>
                 </div>
@@ -75,14 +77,7 @@ function MenuPage({ categories }) {
                     :
                     <div>
                       {categories.map(category =>
-                        <div className='text-center mb-4' key={category.id}>
-                          <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
-                            <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
-                              <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
-                              <h5>{category.name}</h5>
-                            </Link>
-                          </div>
-                        </div>
+                        <OneCategory key={category.id} category={category} handleClick={handleClick} />
                       )}
                     </div>
                   }
@@ -91,7 +86,7 @@ function MenuPage({ categories }) {
             </div>
           </div>
           <div className='col position-relative dishesarea' >
-            {isLoading &&
+          {isLoading &&
               <PreloadMedia media={media} onFinished={() => { setIsLoaded(true); setIsLoading(false) }} />
             }
             {!isLoaded ?
@@ -103,7 +98,7 @@ function MenuPage({ categories }) {
                 </div>
                 <div className='row'>
                   {dishes.map(dish =>
-                    <OneDish dish={dish} />
+                    <OneDish key={dish.id} dish={dish} />
                   )}
                 </div>
                 <div className='row mt-4'>
