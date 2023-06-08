@@ -11,6 +11,6 @@ Check out the [live website](https://uris-diner-digital-menu.wittywave-70237434.
 - Designed using [Bootstrap](https://getbootstrap.com/) and customized with Sass
 - Fully responsive design:
 <div>
-<img src="" height="200">
-<img src="" height="200">
+<img src="https://raw.githubusercontent.com/ugthefluffster/uris-diner-digital-menu/main/example-images/digital-menu-tablet.png" height="200">
+<img src="https://raw.githubusercontent.com/ugthefluffster/uris-diner-digital-menu/main/example-images/digital-menu-phone.png" height="200">
 </div>
