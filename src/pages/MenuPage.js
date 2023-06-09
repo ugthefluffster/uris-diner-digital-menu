@@ -2,8 +2,10 @@ import React from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PreloadMedia, MediaType } from 'react-preload-media';
-import OneDish from '../Components/OneDish';
-import LoadingBar from '../Components/LoadingBar';
+import OneDish from '../components/OneDish';
+import LoadingBar from '../components/LoadingBar';
+import TagVegeterian from '../components/TagVegeterian';
+import TagGlutenFree from '../components/TagGlutenFree';
 import { apiUrl } from '../config'
 import icon from './icon.webp'
 
@@ -44,7 +46,9 @@ function MenuPage({ categories }) {
   return (
     <div>
       <nav className="navbar fixed-top bg-primary justify-content-center shadow p-1">
-        <button className='d-md-none btn btn-primary position-absolute start-0 fs-5 pe-4' data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">
+        <button className='d-md-none btn btn-primary position-absolute start-0 fs-5 pe-4'
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasResponsive">
           More<span className='fs-5 position-absolute' style={{ top: "20%" }}>▾</span>
         </button>
         <Link to="/" className="navbar-brand text-white" >
@@ -62,14 +66,15 @@ function MenuPage({ categories }) {
                 <div className="offcanvas-header">
                   <div></div> {/* empty div for centering */}
                   <h3 className="offcanvas-title ms-4" id="offcanvasLabel">Categories</h3>
-                  <button className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive"></button>
+                  <button className="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    data-bs-target="#offcanvasResponsive"></button>
                 </div>
                 <div>
                   <h3 className="offcanvas-title d-none d-md-block mb-3 text-center">Categories</h3>
                   {!categories ?
                     <div className='text-center'>
-                      <div className="spinner-border text-secondary" role="status">
-                        <span className="visually-hidden">Loading...</span>
+                      <div className="spinner-border text-secondary">
                       </div>
                     </div>
                     :
@@ -77,8 +82,12 @@ function MenuPage({ categories }) {
                       {categories.map(category =>
                         <div className='text-center mb-4' key={category.id}>
                           <div data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive">
-                            <Link onClick={() => handleClick(category.id)} className='text-decoration-none link-dark' to={"/menu/" + category.id}>
-                              <div className='mb-1'><img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" /></div>
+                            <Link to={"/menu/" + category.id}
+                              className='text-decoration-none link-dark'
+                              onClick={() => handleClick(category.id)}  >
+                              <div className='mb-1'>
+                                <img className='rounded-1 object-fit-cover cat-image' src={category.image_src} alt="" />
+                              </div>
                               <h5>{category.name}</h5>
                             </Link>
                           </div>
@@ -108,8 +117,8 @@ function MenuPage({ categories }) {
                 </div>
                 <div className='row mt-4'>
                   <div className='d-flex justify-content-center'>
-                    <p className='me-2'><span className="badge fs-6" style={{ backgroundColor: "green" }} >V</span> Vegeterian</p>
-                    <p><span className="badge fs-6" style={{ backgroundColor: "orange" }}>G</span> Gluten Free</p>
+                    <p className='me-2'><TagVegeterian /> Vegeterian</p>
+                    <p><TagGlutenFree /> Gluten Free</p>
                   </div>
                 </div>
               </div>

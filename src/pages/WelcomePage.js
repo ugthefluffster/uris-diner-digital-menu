@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { PreloadMedia, MediaType } from 'react-preload-media';
-import LoadingBar from '../Components/LoadingBar';
+import LoadingBar from '../components/LoadingBar';
 import dinerimage from './diner-food.jpg'
 
 function WelcomePage({ categories }) {
